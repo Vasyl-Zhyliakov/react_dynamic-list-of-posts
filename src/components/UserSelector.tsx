@@ -1,17 +1,35 @@
-import React from 'react';
+import { useState } from "react";
+import cn from 'classnames';
 
-export const UserSelector: React.FC = () => {
+import { User } from "../types/User";
+import { OneUser } from "./OneUser";
+
+type Props = {
+  users: User[];
+  setSelectedUserId: (id: number | null) => void;
+  selectedUserId: number | null;
+};
+
+export const UserSelector: React.FC<Props> = ({ users, setSelectedUserId, selectedUserId }) => {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  
+  const activeUser = users.find(user => user.id === selectedUserId);
+
   return (
-    <div data-cy="UserSelector" className="dropdown is-active">
+    <div data-cy="UserSelector" className={cn("dropdown", {"is-active": isDropDownOpen}) } >
       <div className="dropdown-trigger">
         <button
           type="button"
           className="button"
           aria-haspopup="true"
           aria-controls="dropdown-menu"
+          onClick={() => setIsDropDownOpen(!isDropDownOpen)}
         >
-          <span>Choose a user</span>
-
+          {activeUser?.name
+            ? (<span>{activeUser.name}</span>)
+            : (<span>Choose a user</span>)
+          }
+          
           <span className="icon is-small">
             <i className="fas fa-angle-down" aria-hidden="true" />
           </span>
@@ -20,21 +38,14 @@ export const UserSelector: React.FC = () => {
 
       <div className="dropdown-menu" id="dropdown-menu" role="menu">
         <div className="dropdown-content">
-          <a href="#user-1" className="dropdown-item">
-            Leanne Graham
-          </a>
-          <a href="#user-2" className="dropdown-item is-active">
-            Ervin Howell
-          </a>
-          <a href="#user-3" className="dropdown-item">
-            Clementine Bauch
-          </a>
-          <a href="#user-4" className="dropdown-item">
-            Patricia Lebsack
-          </a>
-          <a href="#user-5" className="dropdown-item">
-            Chelsey Dietrich
-          </a>
+          {users.map(user => (
+            <OneUser
+              user={user}
+              key={user.id}
+              setSelectedUserId={setSelectedUserId}
+              setIsDropDownOpen={setIsDropDownOpen}
+            />
+          ))}
         </div>
       </div>
     </div>
