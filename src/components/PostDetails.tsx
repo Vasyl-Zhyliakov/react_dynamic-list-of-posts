@@ -19,7 +19,7 @@ export const PostDetails: React.FC<Props> = ({ activePost }) => {
     setComments(currentComments =>
       currentComments.filter(comment => comment.id !== id),
     );
-    
+
     deleteComment(id);
   };
 
@@ -111,11 +111,13 @@ export const PostDetails: React.FC<Props> = ({ activePost }) => {
           )}
         </div>
 
-        {isFormOpen && <NewCommentForm
-          setComments={setComments}
-          postId={activePost.id}
-          setErrorMessage={setErrorMessage}
-        />}
+        {isFormOpen && (
+          <NewCommentForm
+            setComments={setComments}
+            activePostId={activePost.id}
+            setErrorMessage={setErrorMessage}
+          />
+        )}
       </div>
     </div>
   );

@@ -56,8 +56,9 @@ export const App = () => {
     if (activePostId) {
       return posts.find(post => post.id === activePostId);
     }
+
     return null;
-  }, [activePostId]);
+  }, [activePostId, posts]);
 
   return (
     <main className="section">

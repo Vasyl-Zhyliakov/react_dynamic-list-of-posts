@@ -4,4 +4,3 @@ import { client } from '../utils/fetchClient';
 export const getUsersFromServer = () => {
   return client.get<User[]>(`/users`);
 };
-

@@ -5,13 +5,13 @@ import { createComment } from '../api/comments';
 
 type Props = {
   setComments: Dispatch<SetStateAction<Comment[]>>;
-  postId: number;
+  activePostId: number;
   setErrorMessage: (m: string) => void;
 };
 
 export const NewCommentForm: React.FC<Props> = ({
   setComments,
-  postId,
+  activePostId,
   setErrorMessage,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +51,7 @@ export const NewCommentForm: React.FC<Props> = ({
       });
   }
 
-  const onSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     setIsNameHasError(!commentName.trim());
@@ -61,25 +61,26 @@ export const NewCommentForm: React.FC<Props> = ({
     if (!commentName.trim() || !commentEmail.trim() || !commentBody.trim()) {
       return;
     }
+
     addComment({
-      postId: postId,
+      postId: activePostId,
       name: commentName,
       email: commentEmail,
       body: commentBody,
     });
   };
 
-  const onReset = () => {
+  const handleReset = () => {
     setCommentName('');
     setCommentBody('');
     setCommentEmail('');
     setIsNameHasError(false);
     setIsEmailHasError(false);
     setIsBodyHasError(false);
-  }
+  };
 
   return (
-    <form data-cy="NewCommentForm" onSubmit={onSubmit} onReset={onReset}>
+    <form data-cy="NewCommentForm" onSubmit={handleSubmit} onReset={handleReset}>
       <div className="field" data-cy="NameField">
         <label className="label" htmlFor="comment-author-name">
           Author Name
