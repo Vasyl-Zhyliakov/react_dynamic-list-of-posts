@@ -15,6 +15,7 @@ import { Post } from './types/Post';
 import { getPostsFromServer } from './api/posts';
 
 export const App = () => {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +36,7 @@ export const App = () => {
       setPosts([]);
       setErrorMessage('');
       setNotificationMessage('');
+      setActivePostId(null);
 
       getPostsFromServer(selectedUserId)
         .then(fetchPosts => {
@@ -59,6 +61,19 @@ export const App = () => {
 
     return null;
   }, [activePostId, posts]);
+  
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setIsDropDownOpen(false);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
 
   return (
     <main className="section">
@@ -68,9 +83,11 @@ export const App = () => {
             <div className="tile is-child box is-success">
               <div className="block">
                 <UserSelector
+                  isDropDownOpen={isDropDownOpen}
                   users={users}
                   setSelectedUserId={setSelectedUserId}
                   selectedUserId={selectedUserId}
+                  setIsDropDownOpen={setIsDropDownOpen}
                 />
               </div>
 

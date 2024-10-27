@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import cn from 'classnames';
 
 import { User } from '../types/User';
@@ -8,14 +7,18 @@ type Props = {
   users: User[];
   setSelectedUserId: (id: number | null) => void;
   selectedUserId: number | null;
+  isDropDownOpen: boolean;
+  setIsDropDownOpen: (status: boolean) => void;
 };
 
 export const UserSelector: React.FC<Props> = ({
+  isDropDownOpen,
+  setIsDropDownOpen,
   users,
   setSelectedUserId,
   selectedUserId,
 }) => {
-  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  
 
   const activeUser = users.find(user => user.id === selectedUserId);
 
@@ -23,6 +26,7 @@ export const UserSelector: React.FC<Props> = ({
     <div
       data-cy="UserSelector"
       className={cn('dropdown', { 'is-active': isDropDownOpen })}
+      onClick={(event) => event.stopPropagation()}
     >
       <div className="dropdown-trigger">
         <button

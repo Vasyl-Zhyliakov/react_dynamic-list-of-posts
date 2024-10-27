@@ -16,9 +16,7 @@ export const PostsList: React.FC<Props> = ({
   <div data-cy="PostsList">
     <p className="title">Posts:</p>
 
-    <table
-      className='table is-striped is-hoverable is-narrow is-fullwidth'
-    >
+    <table className="table is-striped is-hoverable is-narrow is-fullwidth">
       <thead>
         <tr className="has-background-link-light">
           <th>#</th>

@@ -22,7 +22,9 @@ export const OneUser: React.FC<Props> = ({
   return (
     <a
       href={`#user-${user.id}`}
-      className={cn("dropdown-item", {'is-active': selectedUserId === user.id})}
+      className={cn('dropdown-item', {
+        'is-active': selectedUserId === user.id,
+      })}
       onClick={handleUserSelect}
     >
       {user.name}
