@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import { Post } from '../types/Post';
 import { OnePost } from './OnePost';
 
@@ -18,9 +17,7 @@ export const PostsList: React.FC<Props> = ({
     <p className="title">Posts:</p>
 
     <table
-      className={cn('table is-striped is-hoverable is-narrow', {
-        'is-fullwidth': !activePostId,
-      })}
+      className='table is-striped is-hoverable is-narrow is-fullwidth'
     >
       <thead>
         <tr className="has-background-link-light">

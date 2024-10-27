@@ -50,6 +50,7 @@ export const UserSelector: React.FC<Props> = ({
             <OneUser
               user={user}
               key={user.id}
+              selectedUserId={selectedUserId}
               setSelectedUserId={setSelectedUserId}
               setIsDropDownOpen={setIsDropDownOpen}
             />

@@ -19,15 +19,3 @@ export const createComment = ({
 }: Omit<Comment, 'id'>) => {
   return client.post<Comment>('/comments', { postId, name, email, body });
 };
-
-// export interface Comment {
-//   id: number;
-//   postId: number;
-//   name: string;
-//   email: string;
-//   body: string;
-// }
-
-// export const updateTodo = ({ id, title, completed }: Omit<Todo, 'userId'>) => {
-//   return client.patch<Todo>(`/todos/${id}`, { title, completed });
-// };
