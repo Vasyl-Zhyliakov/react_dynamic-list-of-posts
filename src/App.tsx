@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -21,7 +21,7 @@ export const App = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [notificationMessage, setNotificationMessage] = useState('');
-  const [activePostId, setActivePostId] = useState<number | null>(null)
+  const [activePostId, setActivePostId] = useState<number | null>(null);
 
   useEffect(() => {
     getUsersFromServer()
@@ -37,10 +37,10 @@ export const App = () => {
       setNotificationMessage('');
 
       getPostsFromServer(selectedUserId)
-        .then((fetchPosts) => {
-          setPosts(fetchPosts)
+        .then(fetchPosts => {
+          setPosts(fetchPosts);
           if (fetchPosts.length === 0) {
-            setNotificationMessage('No posts yet')
+            setNotificationMessage('No posts yet');
           }
         })
         .catch(() => {
@@ -51,6 +51,13 @@ export const App = () => {
         });
     }
   }, [selectedUserId]);
+
+  const activePost = useMemo(() => {
+    if (activePostId) {
+      return posts.find(post => post.id === activePostId);
+    }
+    return null;
+  }, [activePostId]);
 
   return (
     <main className="section">
@@ -88,34 +95,33 @@ export const App = () => {
                   </div>
                 )}
 
-                {posts?.length > 0 &&
+                {posts.length > 0 && (
                   <PostsList
-                  posts={posts}
-                  activePostId={activePostId}
-                  setActivePostId={setActivePostId}
-                  />}
-
-                
+                    posts={posts}
+                    activePostId={activePostId}
+                    setActivePostId={setActivePostId}
+                  />
+                )}
               </div>
             </div>
           </div>
 
-          {activePostId && (
-            <div
+          <div
             data-cy="Sidebar"
             className={classNames(
               'tile',
               'is-parent',
               'is-8-desktop',
               'Sidebar',
-              'Sidebar--open',
+              { 'Sidebar--open': activePostId },
             )}
           >
-            <div className="tile is-child box is-success ">
-              <PostDetails />
-            </div>
+            {activePost && (
+              <div className="tile is-child box is-success ">
+                <PostDetails activePost={activePost} />
+              </div>
+            )}
           </div>
-          )}
         </div>
       </div>
     </main>

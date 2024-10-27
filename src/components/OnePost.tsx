@@ -9,7 +9,11 @@ type Props = {
   setActivePostId: (param: number | null) => void;
 };
 
-export const OnePost: React.FC<Props> = ({ post, activePostId, setActivePostId }) => {
+export const OnePost: React.FC<Props> = ({
+  post,
+  activePostId,
+  setActivePostId,
+}) => {
   const handleOpenPost = (currentPostId: number | null) => {
     if (activePostId === currentPostId) {
       setActivePostId(null);
@@ -22,18 +26,18 @@ export const OnePost: React.FC<Props> = ({ post, activePostId, setActivePostId }
     <tr data-cy="Post">
       <td data-cy="PostId">{post.id}</td>
 
-      <td data-cy="PostTitle">
-        {post.title}
-      </td>
+      <td data-cy="PostTitle">{post.title}</td>
 
       <td className="has-text-right is-vcentered">
         <button
           type="button"
           data-cy="PostButton"
-          className={cn("button is-link", { "is-light": activePostId !== post.id})}
+          className={cn('button is-link', {
+            'is-light': activePostId !== post.id,
+          })}
           onClick={() => handleOpenPost(post.id)}
         >
-          {activePostId === post.id ? ('Close') : ('Open')}
+          {activePostId === post.id ? 'Close' : 'Open'}
         </button>
       </td>
     </tr>

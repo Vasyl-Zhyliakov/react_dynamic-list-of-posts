@@ -34,12 +34,12 @@ export const PostsList: React.FC<Props> = ({
       <tbody>
         {posts.map(post => (
           <OnePost
+            key={post.id}
             post={post}
             activePostId={activePostId}
             setActivePostId={setActivePostId}
           />
         ))}
-      
       </tbody>
     </table>
   </div>
